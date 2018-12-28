@@ -78,6 +78,14 @@ public class Presence implements Serializable {
         this.presenceDate = presenceDate;
     }
 
+    public Presence(Integer presenceId, String checkIn, String checkOut, Date presenceDate, Employee nik) {
+        this.presenceId = presenceId;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.presenceDate = presenceDate;
+        this.nik = nik;
+    }
+
     public Integer getPresenceId() {
         return presenceId;
     }

@@ -14,8 +14,8 @@
     </head>
     <body>
         <h1>Hello !</h1>
-    <c:forEach var="parameter" items="${parameterList}">
-            <c:out value="${parameter.parameterName}"/>
+    <c:forEach var="parameter" items="${Overtime}">
+            <c:out value="${parameter.otDuration}"/>
         </c:forEach>
     </body>
 </html>

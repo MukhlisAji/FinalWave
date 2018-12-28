@@ -14,13 +14,14 @@ import java.util.List;
  * @author Mukhlish
  */
 public interface OvertimeInterface {
+
     public List<Overtime> getAll();
-    
+
     public List<Overtime> getAllId(Integer id);
-    
-    public Overtime getOvertimeById(Integer id);
-    
+
+    public Object getOvertimeById(Integer id);
+
     public void saveOrUpdate(Overtime overtime);
-    
+
     public void delete(Integer id);
 }

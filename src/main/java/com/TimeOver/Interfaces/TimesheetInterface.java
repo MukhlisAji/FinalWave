@@ -14,13 +14,16 @@ import java.util.List;
  * @author Mukhlish
  */
 public interface TimesheetInterface {
+
     public List<Timesheet> getAll();
-    
+
     public List<Timesheet> getAllId(Integer id);
-    
+
     public Timesheet gettimesheetById(Integer id);
-    
+
+    public String findTimesheetId();
+
     public void saveOrUpdate(Timesheet timesheet);
-    
+
     public void delete(Integer id);
 }

@@ -18,7 +18,7 @@ public interface EmployeeInterface {
     
     public List<Employee> getAllId(String nik);
     
-    public Employee getemployeeById(String nik);
+    public Object getemployeeById(String nik);
     
     public void saveOrUpdate(Employee employee);
     

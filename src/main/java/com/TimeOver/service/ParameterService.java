@@ -19,11 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ParameterService implements ParameterInterface{
+public class ParameterService implements ParameterInterface {
 
     @Autowired
     ParameterRepository pr;
-    
+
     @Override
     public List<Parameter> getAll() {
         return (List<Parameter>) pr.findAll();
@@ -31,22 +31,22 @@ public class ParameterService implements ParameterInterface{
 
     @Override
     public List<Parameter> getAllId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (List<Parameter>) pr.findIdByName(id);
     }
 
     @Override
     public Parameter getparamById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pr.getOne(id);
     }
 
     @Override
     public void saveOrUpdate(Parameter parameter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        pr.save(parameter);
     }
 
     @Override
     public void delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    pr.deleteById(id);
     }
-    
+
 }

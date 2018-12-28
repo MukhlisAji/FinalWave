@@ -84,6 +84,16 @@ public class Overtime implements Serializable {
         this.status = status;
     }
 
+    public Overtime(Integer overtimeId, String description, int fee, int otDuration, String status, Timesheet timesheetId, Presence presenceId) {
+        this.overtimeId = overtimeId;
+        this.description = description;
+        this.fee = fee;
+        this.otDuration = otDuration;
+        this.status = status;
+        this.timesheetId = timesheetId;
+        this.presenceId = presenceId;
+    }
+
     public Integer getOvertimeId() {
         return overtimeId;
     }

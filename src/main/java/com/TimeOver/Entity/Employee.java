@@ -74,11 +74,11 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "hireDate")
+    @Column(name = "hire_date")
     @Temporal(TemporalType.DATE)
     private Date hireDate;
     @Basic(optional = false)
@@ -87,22 +87,22 @@ public class Employee implements Serializable {
     private int salary;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "isAdmin")
+    @Column(name = "is_admin")
     private boolean isAdmin;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "isDelete")
+    @Column(name = "is_delete")
     private boolean isDelete;
-    @Column(name = "isActive")
+    @Column(name = "is_active")
     private Boolean isActive;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nik", fetch = FetchType.LAZY)
     private List<Timesheet> timesheetList;
-    @JoinColumn(name = "jobId", referencedColumnName = "jobId")
+    @JoinColumn(name = "job_id", referencedColumnName = "jobId")
     @ManyToOne(fetch = FetchType.LAZY)
     private Job jobId;
     @OneToMany(mappedBy = "managerId", fetch = FetchType.LAZY)
     private List<Employee> employeeList;
-    @JoinColumn(name = "managerId", referencedColumnName = "nik")
+    @JoinColumn(name = "manager_id", referencedColumnName = "nik")
     @ManyToOne(fetch = FetchType.LAZY)
     private Employee managerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nik", fetch = FetchType.LAZY)

@@ -7,11 +7,13 @@ package com.TimeOver.Repositories;
 
 import com.TimeOver.Entity.Overtime;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
  * @author Mukhlish
  */
 public interface OvertimeRepository extends JpaRepository<Overtime, Integer> {
-    
+     @Query("SELECT MAX(overtimeId) FROM Overtime")
+    String findOvertimeId();
 }

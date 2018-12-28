@@ -8,6 +8,7 @@ package com.TimeOver.Interfaces;
 import com.TimeOver.Entity.Parameter;
 import com.TimeOver.Entity.Presence;
 import java.util.List;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -18,7 +19,9 @@ public interface PresenceInterface {
     
     public List<Presence> getAllId(Integer id);
     
-    public Presence getpresenceById(Integer id);
+    public Integer findPresenceId();
+    
+    public Object getpresenceById(Integer id);
     
     public void saveOrUpdate(Presence parameter);
     

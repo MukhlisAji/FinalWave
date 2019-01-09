@@ -1,4 +1,10 @@
 <%-- 
+    Document   : PageAdminJob
+    Created on : Dec 29, 2018, 7:26:17 AM
+    Author     : tikamhrdk
+--%>
+
+<%-- 
     Document   : PageAdmin
     Created on : Dec 15, 2018, 7:39:59 AM
     Author     : tikamhrdk
@@ -11,10 +17,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://www.springframework.org/tags" prefix = "spring" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import = "java.io.*,java.util.*,java.sql.*"%>
-<%@ page import = "javax.servlet.http.*,javax.servlet.*" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
 
 <!doctype html>
 <html class="no-js" lang="en">
@@ -22,7 +24,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Admin | Admin</title>
+        <title>Data Table | jeweler - Material Admin Template</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- favicon
@@ -105,36 +107,23 @@
                 ============================================ -->
         <link rel="stylesheet" href="<c:url value="/resources/css/select2/select2.min.css"/>">
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('[id="Details"]').click(function () {
-                    var nik = $(this).attr('value');
-                    $.get("/EditEmployee/" + nik, function (HASIL, status) {
-                        $("#detailhasil").html(HASIL);
-                        $('#PrimaryModalblbgpro').modal('show');
+        <!--        <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('[id="Details"]').click(function () {
+                            var nik = $(this).attr('value');
+                            $.get("../editEmp?nik=" + nik, function (HASIL, status) {
+                                $("#detailhasil").html(HASIL);
+                                $('#EditData').modal('show');
+                            });
+                        });
                     });
-                });
-            });
-        </script>
+                </script>-->
     </head>
 
     <body>
         <!--[if lt IE 8]>
                 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
             <![endif]-->
-        <sql:setDataSource var = "jobtitles" driver = "com.mysql.jdbc.Driver"
-                           url = "jdbc:mysql://localhost:3306/overtime_new"
-                           user = "root"  password = ""/>
-
-        <sql:query dataSource = "${jobtitles}" var = "result">
-            SELECT * from job;
-        </sql:query>
-        <sql:query dataSource = "${jobtitles}" var = "resultmaxs">
-            SELECT max(nik) as max from employee;
-        </sql:query>
-        <sql:query dataSource = "${jobtitles}" var = "resultt">
-            SELECT * from employee;
-        </sql:query>
 
         <div class="left-sidebar-pro">
             <nav id="sidebar" class="">
@@ -291,135 +280,30 @@
                                             <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
                                         </div>
                                     </div>
-                                    <form method="POST" class="form-group" action="/saveEmployee">
-                                        <div class="modal-body" >
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">NIK</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <c:forEach var="row" items="${resultmaxs.rows}">                                                            
-                                                            <input type="text"  class="form-control" name="nik" value="<c:out value="${row.max+1}"/>" readonly="true"/>
-                                                        </c:forEach>
-
-                                                        <%--<c:set var="ids" value="${resultmaxs.rows}"/>--%>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Name</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" name="name"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Email</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" name="email"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Phone</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <div class="input-mark-inner mg-b-22">
-                                                            <input type="text" class="form-control" data-mask="9999999999999" placeholder="" name="phoneNumber">
-                                                            <!--<span class="help-block">(999) 999-9999</span>-->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Hire Date</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <div class="input-mark-inner mg-b-22">
-                                                            <div class="form-group data-custon-pick" id="data_2">
-
-                                                                <div class="input-group date">
-                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                                    <input type="text" class="form-control" name="hireDate">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                    <form method="POST" class="form-group" action="/saveJob">
+                                        <div class="modal-body">
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                         <label class="login2 pull-right pull-right-pro">Job Id</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <div class="form-select-list">
-                                                            <select class="form-control custom-select-value" name="jobId">
-                                                                <c:forEach var="rows" items="${result.rows}">
-                                                                    <option value="<c:out value="${rows.job_id}"/>"><c:out value="${rows.job_title}"/></option>
-                                                                </c:forEach>
-                                                            </select>
-                                                        </div>
+
+                                                        <input type="text"  class="form-control" name="jobId" value="" />
                                                     </div>
                                                 </div>
                                             </div>
-
 
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">Salary</label>
+                                                        <label class="login2 pull-right pull-right-pro">Job Title</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <div class="mg-b-22">
-                                                            <input type="text" class="form-control" placeholder="" name="salary">
-                                                        </div>
+                                                        <input type="text" class="form-control" name="jobTitle"/>
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro"> Manager ID</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <div class="form-select-list">
-                                                            <select class="form-control custom-select-value" name="managerId">
-                                                                <c:forEach var="rowss" items="${resultt.rows}">
-                                                                    <option value="<c:out value="${rowss.manager_id}"/>"><c:out value="${rowss.name}"/></option>
-                                                                </c:forEach>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <input type="hidden" name="isDelete" value="0">
-                                            </div>
-
-
 
                                         </div>
 
@@ -432,43 +316,45 @@
                                 </div>
                             </div>
                         </div>
-                        <!--                        <div id="EditData" class="modal fade" role="dialog">
-                                                    <div class="modal-dialog">
-                                                         konten modal
-                                                        <div class="modal-content">
-                                                             heading modal 
-                                                            <div class="modal-header">
-                        
-                                                                <h4 class="modal-title">Edit Data</h4>
-                                                            </div>
-                                                             body modal 
-                                                            <div class="modal-body">
-                        
-                                                                <div id="detailhasil">  
-                        
-                                                                </div>
-                                                            </div>
-                                                             footer modal 
-                        
-                                                        </div>
-                                                    </div>
-                                                </div>-->
+                        <div id="EditData" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- konten modal-->
+                                <div class="modal-content">
+                                    <!-- heading modal -->
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Edit Data</h4>
+                                    </div>
+                                    <!-- body modal -->
+                                    <div class="modal-body">
+
+                                        <div id="detailhasil">  
+
+                                        </div>
+                                    </div>
+                                    <!-- footer modal -->
+
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
-                <div id="PrimaryModalblbgpro" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+                <div id="PrimaryModalblbgpro" class="modal modal-adminpro-general default-popup-PrimaryModal PrimaryModal-bgcolor fade" role="dialog">
                     <div class="modal-dialog">
-
                         <div class="modal-content">
-                            <div class="modal-header header-color-modal bg-color-1">
-                                <h4 class="modal-title">Edit Employee</h4>
-                                <div class="modal-close-area modal-close-df">
-                                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
-                                </div>
+                            <div class="modal-close-area modal-close-df">
+                                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
                             </div>
-                            <div class="modal-body" id="detailhasil">
+                            <div class="modal-body">
+                                <i class="fa fa-check modal-check-pro"></i>
+                                <h2>Awesome!</h2>
+                                <p>The Modal plugin is a dialog box/popup window that is displayed on top of the current page</p>
                             </div>
-
+                            <div class="modal-footer">
+                                <a data-dismiss="modal" href="#">Cancel</a>
+                                <a href="#">Process</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -487,60 +373,49 @@
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
                                             <th data-field="no">No</th>
-                                            <th data-field="nik">NIK</th>
-                                            <th data-field="name" data-editable="true">Name</th>
-                                            <th data-field="email" data-editable="true">Email</th>
-                                            <th data-field="phoneNumber" data-editable="true">Phone Number</th>
-                                            <th data-field="hireDate" data-editable="true">Hire Date</th>
-                                            <th data-field="manager" data-editable="true">Manager</th>
-                                            <th data-field="salary" data-editable="true">Salary</th>
-                                            <th data-field="JobTitle" data-editable="true">Job Title</th>
+                                            <th data-field="job_id" data-editable="true">Job ID</th>
+                                            <th data-field="job_title" data-editable="true">Job Title</th>
+
                                             <th data-field="action">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="employee" items="${employeeList}">
+                                        <c:forEach var="jobs" items="${JobList}">
                                             <c:set var="numberOfRows" value="${numberOfRows+1}"/>
                                             <tr>
                                                 <td></td>
                                                 <td><c:out value="${numberOfRows}"/> </td>
-                                                <td>${employee.nik}</td>
-                                                <td>${employee.name}</td>
-                                                <td>${employee.email}</td>
-                                                <td>${employee.phoneNumber}</td>
-                                                <td>${employee.hireDate}</td>
-                                                <td>${employee.managerId.name}</td>
-                                                <td>${employee.salary}</td>
-                                                <td>${employee.jobId.jobTitle}</td>
-                                                <td><a class="btn btn-success" id="Details" data-toggle="modal" value="${employee.nik}">Edit</a>
-                                                    <a class="btn btn-warning" href="/DeleteEmployee/${employee.nik}">Delete</a></td> 
+                                                <td>${jobs.jobId}</td>
+                                                <td>${jobs.jobTitle}</td>
+                                                <td><a class="btn btn-success" data-toggle="modal" data-target="" href="/editJob/${jobs.jobId}">Edit</a>
+                                                    <a class="btn btn-warning" href="/deleteJob/${jobs.jobId}">Delete</a></td> 
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
                             <!-- Modal -->
-                            <!--                            <div id="EditData" class="modal modal-adminpro-general default-popup-PrimaryModal PrimaryModal-bgcolor fade" role="dialog">
-                                                            <div class="modal-dialog">
-                                                                 konten modal
-                                                                <div class="modal-content">
-                                                                     heading modal 
-                                                                    <div class="modal-header">
-                            
-                                                                        <h4 class="modal-title">Edit Data</h4>
-                                                                    </div>
-                                                                     body modal 
-                                                                    <div class="modal-body">
-                            
-                                                                        <div id="detailhasil">  
-                            
-                                                                        </div>
-                                                                    </div>
-                                                                     footer modal 
-                            
-                                                                </div>
-                                                            </div>
-                                                        </div>-->
+                            <div id="EditData" class="modal modal-adminpro-general default-popup-PrimaryModal PrimaryModal-bgcolor fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- konten modal-->
+                                    <div class="modal-content">
+                                        <!-- heading modal -->
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title">Edit Data</h4>
+                                        </div>
+                                        <!-- body modal -->
+                                        <div class="modal-body">
+
+                                            <div id="detailhasil">  
+
+                                            </div>
+                                        </div>
+                                        <!-- footer modal -->
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

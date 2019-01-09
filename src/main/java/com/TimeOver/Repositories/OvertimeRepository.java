@@ -14,6 +14,6 @@ import org.springframework.data.jpa.repository.Query;
  * @author Mukhlish
  */
 public interface OvertimeRepository extends JpaRepository<Overtime, Integer> {
-     @Query("SELECT MAX(overtimeId) FROM Overtime")
+     @Query("SELECT MAX(overtimeId) FROM Overtime ")
     String findOvertimeId();
 }

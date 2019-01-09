@@ -5,6 +5,8 @@
  */
 package com.TimeOver.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -38,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Timesheet implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @JsonManagedReference
     @Id
     @Basic(optional = false)
     @NotNull
@@ -52,9 +55,11 @@ public class Timesheet implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "periode")
     private String periode;
+    @JsonBackReference
     @JoinColumn(name = "nik", referencedColumnName = "nik")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Employee nik;
+    @JsonBackReference
     @OneToMany(mappedBy = "timesheetId", fetch = FetchType.LAZY)
     private List<Overtime> overtimeList;
 
@@ -68,6 +73,13 @@ public class Timesheet implements Serializable {
     public Timesheet(String timesheetId, String periode) {
         this.timesheetId = timesheetId;
         this.periode = periode;
+    }
+
+    public Timesheet(String timesheetId, byte[] file, String periode, Employee nik) {
+        this.timesheetId = timesheetId;
+        this.file = file;
+        this.periode = periode;
+        this.nik = nik;
     }
 
     public String getTimesheetId() {

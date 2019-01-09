@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -95,9 +94,7 @@ public class Employee implements Serializable {
     private boolean isDelete;
     @Column(name = "is_active")
     private Boolean isActive;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nik", fetch = FetchType.LAZY)
-    private List<Timesheet> timesheetList;
-    @JoinColumn(name = "job_id", referencedColumnName = "jobId")
+    @JoinColumn(name = "job_id", referencedColumnName = "job_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Job jobId;
     @OneToMany(mappedBy = "managerId", fetch = FetchType.LAZY)
@@ -105,8 +102,6 @@ public class Employee implements Serializable {
     @JoinColumn(name = "manager_id", referencedColumnName = "nik")
     @ManyToOne(fetch = FetchType.LAZY)
     private Employee managerId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nik", fetch = FetchType.LAZY)
-    private List<Presence> presenceList;
 
     public Employee() {
     }
@@ -125,6 +120,21 @@ public class Employee implements Serializable {
         this.salary = salary;
         this.isAdmin = isAdmin;
         this.isDelete = isDelete;
+    }
+
+    public Employee(String nik, String name, String email, String password, String phoneNumber, Date hireDate, int salary, boolean isAdmin, boolean isDelete, Boolean isActive, Job jobId, Employee managerId) {
+        this.nik = nik;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.hireDate = hireDate;
+        this.salary = salary;
+        this.isAdmin = isAdmin;
+        this.isDelete = isDelete;
+        this.isActive = isActive;
+        this.jobId = jobId;
+        this.managerId = managerId;
     }
 
     public String getNik() {
@@ -207,15 +217,6 @@ public class Employee implements Serializable {
         this.isActive = isActive;
     }
 
-    @XmlTransient
-    public List<Timesheet> getTimesheetList() {
-        return timesheetList;
-    }
-
-    public void setTimesheetList(List<Timesheet> timesheetList) {
-        this.timesheetList = timesheetList;
-    }
-
     public Job getJobId() {
         return jobId;
     }
@@ -239,15 +240,6 @@ public class Employee implements Serializable {
 
     public void setManagerId(Employee managerId) {
         this.managerId = managerId;
-    }
-
-    @XmlTransient
-    public List<Presence> getPresenceList() {
-        return presenceList;
-    }
-
-    public void setPresenceList(List<Presence> presenceList) {
-        this.presenceList = presenceList;
     }
 
     @Override

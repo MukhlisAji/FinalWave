@@ -291,7 +291,7 @@
                         <h1>Overtime Data Table</h1>
                     </div>
                 </div><br><br><br>
-                <form method="POST" action="../uploadFile">
+                <form method="POST" action="/uploadFile">
                     <div class="form-group-inner">
                         <div class="row">
                             <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
@@ -309,7 +309,7 @@
 
                                         </div>
                                         <div class="form-inline">
-                                            <input type="text" id="prepend-big-btn" name="xfiles" placeholder="no file selected">
+                                            <input type="text" id="prepend-big-btn" name="file" placeholder="no file selected">
 
                                         </div>
                                     </div>

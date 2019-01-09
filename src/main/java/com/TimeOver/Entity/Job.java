@@ -6,20 +6,16 @@
 package com.TimeOver.Entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,15 +35,13 @@ public class Job implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "jobId")
+    @Column(name = "job_id")
     private String jobId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "jobTitle")
+    @Column(name = "job_title")
     private String jobTitle;
-    @OneToMany(mappedBy = "jobId", fetch = FetchType.LAZY)
-    private List<Employee> employeeList;
 
     public Job() {
     }
@@ -55,7 +49,7 @@ public class Job implements Serializable {
     public Job(String jobId) {
         this.jobId = jobId;
     }
-
+    
     public Job(String jobId, String jobTitle) {
         this.jobId = jobId;
         this.jobTitle = jobTitle;
@@ -75,15 +69,6 @@ public class Job implements Serializable {
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
-    }
-
-    @XmlTransient
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
     }
 
     @Override

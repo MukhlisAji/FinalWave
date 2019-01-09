@@ -20,13 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class EmployeeService implements EmployeeInterface{
+public class EmployeeService implements EmployeeInterface {
+
     @Autowired
     EmployeeRepository er;
 
     @Override
     public List<Employee> getAll() {
-     return (List<Employee>) er.findAll();
+        return (List<Employee>) er.findAll();
     }
 
     @Override
@@ -35,20 +36,28 @@ public class EmployeeService implements EmployeeInterface{
     }
 
     @Override
-    public Object getemployeeById(String nik) {
-        
+    public Employee getemployeeById(String nik) {
+
         return er.findById(nik).get();
     }
 
     @Override
     public void saveOrUpdate(Employee employee) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        er.save(employee);
     }
 
     @Override
     public void delete(String nik) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+    @Override
+    public Employee getEmployeeByPass(String password) {
+        return er.getEmployeeByPass(password);
+    }
+
+    @Override
+    public List<Employee> getAlll() {
+        return (List<Employee>) er.getAlll();
+    }
 }

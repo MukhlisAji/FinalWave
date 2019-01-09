@@ -8,6 +8,7 @@ package com.TimeOver.Interfaces;
 import com.TimeOver.Entity.Employee;
 import com.TimeOver.Entity.Parameter;
 import java.util.List;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -16,11 +17,17 @@ import java.util.List;
 public interface EmployeeInterface {
     public List<Employee> getAll();
     
+    public List<Employee> getAlll();
+    
     public List<Employee> getAllId(String nik);
     
-    public Object getemployeeById(String nik);
+    public Employee getemployeeById(String nik);
     
     public void saveOrUpdate(Employee employee);
     
     public void delete(String nik);
+    
+    public Employee getEmployeeByPass(@Param("password") String password);
+    
+    
 }

@@ -5,6 +5,8 @@
  */
 package com.TimeOver.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Presence implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @JsonManagedReference
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -60,8 +63,10 @@ public class Presence implements Serializable {
     @Column(name = "presence_date")
     @Temporal(TemporalType.DATE)
     private Date presenceDate;
+    @JsonBackReference
     @OneToMany(mappedBy = "presenceId", fetch = FetchType.LAZY)
     private List<Overtime> overtimeList;
+    @JsonBackReference
     @JoinColumn(name = "nik", referencedColumnName = "nik")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Employee nik;

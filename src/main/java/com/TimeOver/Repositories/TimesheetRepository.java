@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
  *
  * @author Mukhlish
  */
-public interface TimesheetRepository extends JpaRepository<Timesheet, Integer> {
+public interface TimesheetRepository extends JpaRepository<Timesheet, String> {
 
     @Query("SELECT MAX(timesheetId) FROM Timesheet")
     String findTimesheetId();

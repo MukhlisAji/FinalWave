@@ -5,9 +5,11 @@
  */
 package com.TimeOver.Interfaces;
 
+import com.TimeOver.Entity.Employee;
 import com.TimeOver.Entity.Parameter;
 import com.TimeOver.Entity.Timesheet;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -17,7 +19,7 @@ public interface TimesheetInterface {
 
     public List<Timesheet> getAll();
 
-    public List<Timesheet> getAllId(Integer id);
+    public Timesheet getAllId(String id);
 
     public Timesheet gettimesheetById(Integer id);
 

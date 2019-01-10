@@ -5,6 +5,8 @@
  */
 package com.TimeOver.API;
 
+import com.TimeOver.Entity.Employee;
+import com.TimeOver.Entity.Overtime;
 import com.TimeOver.Entity.Presence;
 import com.TimeOver.Repositories.PresenceRepository;
 import java.util.List;
@@ -27,5 +29,21 @@ public class PresenceResource {
     @GetMapping("/allPresence")
     public List<Presence> getAll(){
         return pr.findAll();
+    }
+    
+    @GetMapping("/find")
+    public List<Presence> find(){
+        return pr.findOvertime(new Employee("14424"), "12");
+    }
+    
+    @GetMapping("/findOver")
+    public List<Overtime> findOver(){
+        List<Presence> list1 = pr.findOvertime(new Employee("14424"), "12");
+        List<Overtime> list = null;
+        for (Presence presence : list1) {
+            list = presence.getOvertimeList();
+            
+        }
+        return list;
     }
 }

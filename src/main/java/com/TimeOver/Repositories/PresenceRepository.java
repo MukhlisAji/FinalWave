@@ -5,6 +5,7 @@
  */
 package com.TimeOver.Repositories;
 
+import com.TimeOver.Entity.Employee;
 import com.TimeOver.Entity.Parameter;
 import com.TimeOver.Entity.Presence;
 import java.util.List;
@@ -16,11 +17,12 @@ import org.springframework.data.repository.query.Param;
  *
  * @author Mukhlish
  */
+
 public interface PresenceRepository extends JpaRepository<Presence, Integer> {
     @Query("SELECT MAX(presenceId) FROM Presence") 
     Integer findPresenceId();
-    @Query("SELECT p FROM Presence p WHERE p.nik = '14424' and p.presenceDate LIKE '_____12'") 
-    Object findOvertime();
+    @Query("SELECT p FROM Presence p WHERE p.nik = ?1 and p.presenceDate LIKE '2018_12%'") 
+    List<Presence> findOvertime(Employee nik, String mount);
     @Query("SELECT p FROM Presence p ") 
     List<Presence> findbyNik();
 }

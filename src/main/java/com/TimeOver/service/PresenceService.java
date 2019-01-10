@@ -5,6 +5,7 @@
  */
 package com.TimeOver.service;
 
+import com.TimeOver.Entity.Employee;
 import com.TimeOver.Entity.Parameter;
 import com.TimeOver.Entity.Presence;
 import com.TimeOver.Interfaces.PresenceInterface;
@@ -52,5 +53,10 @@ public class PresenceService implements PresenceInterface{
     @Override
     public Integer findPresenceId() {
         return pr.findPresenceId();
+        
+    }
+    @Override
+    public List<Presence> findOvertime(Employee nik) {
+        return pr.findOvertime(nik, "12");
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.TimeOver.Interfaces;
 
+import com.TimeOver.Entity.Employee;
 import com.TimeOver.Entity.Parameter;
 import com.TimeOver.Entity.Presence;
 import java.util.List;
@@ -22,6 +23,8 @@ public interface PresenceInterface {
     public Integer findPresenceId();
     
     public Object getpresenceById(Integer id);
+    
+    public List<Presence> findOvertime(Employee nik);
     
     public void saveOrUpdate(Presence parameter);
     

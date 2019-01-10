@@ -214,15 +214,12 @@
                                                         </li>
                                                         <li><a href="#"><span class="fa fa-cog author-log-ic"></span>Settings</a>
                                                         </li>
-                                                        
-                                                            <form action="/logout1" method="POST">
-                                                                <input type="hidden" class="text-info form-control" placeholder="" name="durasi" value="0" readonly/> 
-                                                                <input type="hidden" class="text-info form-control" placeholder="" name="Description" value="" readonly/> 
-                                                                <li><button type="submit" class="btn-danger"><span class="fa fa-lock author-log-ic"></span>Log Out</button>
-                                                                </li>
-                                                            </form>
-
-
+                                                        <form action="/logout1" method="POST">
+                                                            <input type="hidden" class="text-info form-control" placeholder="" name="durasi" value="0" readonly/> 
+                                                            <input type="hidden" class="text-info form-control" placeholder="" name="Description" value="" readonly/> 
+                                                            <li><button type="submit" class="btn-danger"><span class="fa fa-lock author-log-ic"></span>Log Out</button>
+                                                            </li>
+                                                        </form>
                                                     </ul>
                                                 </li>
 
@@ -314,19 +311,26 @@
 
         </form>
         <!-- Static Table Start -->
+
+        <div class="" style="float: right; overflow: auto; margin:30px">
+            <a href="/file" class="btn btn-success" target = "_blank">show timesheet</a>
+        </div>
         <div class="data-table-area mg-tb-15">
             <div class="container-fluid">
                 <div class="sparkline13-list">
-                    <div class="sparkline13-hd">
-                        <div class="main-sparkline13-hd">
+
+                    <div class="sparkline13-hd" >
+                        <div class="main-sparkline13-hd" style="float: left; overflow: auto; ">
                             <h1>Employees <span class="table-project-n">Data</span> Table</h1>
                         </div>
+
                     </div>
                     <div class="sparkline13-graph">
                         <div class="datatable-dashv1-list custom-datatable-overright">
-
                             <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true" data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true" data-show-toggle="true" data-resizable="true" data-cookie="true"
                                    data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+
+
                                 <thead>
                                     <tr>
                                         <th data-field="no">No</th>

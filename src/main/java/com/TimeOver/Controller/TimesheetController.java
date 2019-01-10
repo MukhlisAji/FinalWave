@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.Base64;
 import java.util.List;
@@ -43,12 +44,13 @@ public class TimesheetController {
     @Autowired
     TimesheetInterface ti;
 
-    @RequestMapping("/upload")
-    public ModelAndView upload() {
-        ModelAndView mav = new ModelAndView("jsp/index");
+    @RequestMapping("/show")
+    public ModelAndView show() {
+        ModelAndView mav = new ModelAndView("jsp/home");
         return mav;
     }
-
+    
+    
     @RequestMapping("/timesheet")
     public ModelAndView getAll() {
         ModelAndView mav = new ModelAndView("home");
@@ -56,10 +58,19 @@ public class TimesheetController {
         mav.addObject("timesheetList", timesheets);
         return mav;
     }
+    
+    @RequestMapping("/file")
+    public ModelAndView file() {
+        ModelAndView mav = new ModelAndView("jsp/index");
+        Timesheet timesheets = ti.getAllId("2");
+        String file = new String(timesheets.getFile());
+        mav.addObject("file", file);
+        return mav;
+    }
 
     @PostMapping("/uploadFile")
-    public ModelAndView uploadFile(@RequestParam("file") String file) throws IOException {
-        ModelAndView mv = new ModelAndView("jsp/index");
+    public ModelAndView uploadFile(@RequestParam("file") String file, Principal principal) throws IOException {
+        ModelAndView mv = new ModelAndView("redirect:/DashboardEmployee");
 //        ti.saveOrUpdate(file);
         String file1 = encodeToString(file);
         byte[] pdf = file1.getBytes();
@@ -72,7 +83,8 @@ public class TimesheetController {
         for (int i = 0; i < c.length; i++) {
             hasil = c[1] +"-"+ c[0];
         }
-        Timesheet timesheet = new Timesheet("2", file.getBytes(), hasil, new Employee("14409"));
+        String nik = principal.getName();
+        Timesheet timesheet = new Timesheet("2", pdf, hasil, new Employee(nik));
         
         ti.saveOrUpdate(timesheet);
 //            DBFile dbFile = new DBFile(fileName, file.getContentType(), file.getBytes());

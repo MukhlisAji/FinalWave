@@ -11,30 +11,10 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-        <link rel="stylesheet" href="/css/main.css" />
     </head>
     <body>
-        <noscript>
-            <h2>Sorry! Your browser doesn't support Javascript</h2>
-        </noscript>
-        <div class="upload-container">
-            <div class="upload-header">
-            </div>
-            <div class="upload-content">
-                <div class="single-upload">
-                    <h3>Upload Single File</h3>
-                    <form id="singleUploadForm" name="singleUploadForm">
-                        <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
-                        <button type="submit" class="primary submit-btn">Submit</button>
-                    </form>
-                    <div class="upload-response">
-                        <div id="singleFileUploadError"></div>
-                        <div id="singleFileUploadSuccess"></div>
-                    </div>
-                </div>
-             
-            </div>
+        <div style="position: in">
+            <object data="data:application/pdf;base64,${file}" type="application/pdf" style="height:900px;width:100%"></object>
         </div>
-        <script src="<c:url value="/resources/js/upload.js"/>"></script>
     </body>
 </html>

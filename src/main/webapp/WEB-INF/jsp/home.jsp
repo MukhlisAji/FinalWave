@@ -14,8 +14,6 @@
     </head>
     <body>
         <h1>Hello !</h1>
-    <c:forEach var="parameter" items="${Overtime}">
-            <c:out value="${parameter.otDuration}"/>
-        </c:forEach>
+        <a href="/file" target = "_blank">Click here</a>
     </body>
 </html>

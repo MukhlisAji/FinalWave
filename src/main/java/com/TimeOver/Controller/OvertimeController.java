@@ -6,6 +6,7 @@
 package com.TimeOver.Controller;
 
 import Email.sendEmail;
+import com.TimeOver.Entity.Employee;
 import com.TimeOver.Entity.Overtime;
 import com.TimeOver.Entity.Presence;
 import com.TimeOver.Entity.Timesheet;
@@ -16,6 +17,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +53,17 @@ public class OvertimeController {
         ModelAndView mav = new ModelAndView("view/DashboardManager");
         List<Overtime> overtimes = oi.getAll();
         mav.addObject("OvertimeList", overtimes);
+        return mav;
+    }
+
+    @RequestMapping("/Result")
+    public ModelAndView search(@RequestParam("nik") String nik) {
+        ModelAndView mav = new ModelAndView("view/result");
+        List<Presence> overtimes = pi.findOvertime(new Employee(nik));
+        for (Presence overtime : overtimes) {
+            List<Overtime> list = overtime.getOvertimeList();
+            mav.addObject("OvertimeList", list);
+        }
         return mav;
     }
 

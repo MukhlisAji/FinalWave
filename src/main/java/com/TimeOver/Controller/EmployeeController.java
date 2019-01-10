@@ -29,6 +29,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import jbcrypt.BCrypt;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,18 +69,17 @@ public class EmployeeController {
     public ModelAndView getOvertime() {
         ModelAndView mav = new ModelAndView("jsp/home");
 
-        Object o = pr.findOvertime();
-        Presence p = (Presence) o;
+//        Object o = pr.findOvertime();
+//        Presence p = (Presence) o;
 //        HttpSession session = 
 //        Overtime overtime = (Overtime) list1;
 //        mav.addObject("Overtime", list1);
-
         return mav;
     }
 //
 
     @RequestMapping("/")
-    public ModelAndView home(Principal principal) {
+    public ModelAndView home(Principal principal) throws ParseException {
         String nik = principal.getName();
         ModelAndView mav = null;
         System.out.println(nik);
@@ -87,14 +87,30 @@ public class EmployeeController {
         Employee e = (Employee) e1;
         List<Employee> manager = e.getEmployeeList();
         boolean admin = e.getIsAdmin();
+        Presence p;
+//        Kondisi jika id tidak kosong akan menjadi fungsi update
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String dates = String.valueOf(timestamp);
+        String hasil = "";
+        String b = dates.substring(0, 10);
+        String[] c = b.split("-");
+        for (int i = 0; i < c.length; i++) {
+            hasil = c[1] + "/" + c[2] + "/" + c[0];
+        }
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date datesPresence = format.parse(hasil);
+        String checkIn = dates.substring(11, 16);
+
+        p = new Presence(null, checkIn, null, datesPresence, new Employee(nik));
+        pi.saveOrUpdate(p);
         if (!manager.isEmpty() && admin == false) {
-                mav = new ModelAndView("redirect:/DashboardManager");
-            } else if (admin == true) {
-                mav = new ModelAndView("redirect:/DashboardAdmin");
-            } else if (manager.isEmpty() && admin == false) {
-                mav = new ModelAndView("redirect:/DashboardEmployee");
-            }
-        
+            mav = new ModelAndView("redirect:/DashboardManager");
+        } else if (admin == true) {
+            mav = new ModelAndView("redirect:/DashboardAdmin");
+        } else if (manager.isEmpty() && admin == false) {
+            mav = new ModelAndView("redirect:/DashboardEmployee");
+        }
+
         mav.addObject("principal", e);
         return mav;
     }
@@ -163,14 +179,16 @@ public class EmployeeController {
         return mav;
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping("/logout1")
     public ModelAndView logout(@RequestParam("durasi") int duration,
-            @RequestParam("Description") String Description) throws ParseException {
-        String nik = "14424";
+            @RequestParam("Description") String Description, Principal principal) throws ParseException {
+        String nik = principal.getName();
         Object e = ei.getemployeeById(nik);
         Employee e1 = (Employee) e;
         String Pass = e1.getPassword();
         ModelAndView mav = null;
+
+        String dur = String.valueOf(duration);
 
         List<Employee> manager = e1.getEmployeeList();
         boolean admin = e1.getIsAdmin();
@@ -209,20 +227,23 @@ public class EmployeeController {
         p = new Presence(id, Checkin, checkout, datesPresence, new Employee(nik));
         pi.saveOrUpdate(p);
 
-        oc.save(duration, Description);
-        mav = new ModelAndView("redirect:/");
+        if (duration != 0) {
+            oc.save(duration, Description);
+        }
+
+        mav = new ModelAndView("redirect:/logout");
 
         return mav;
     }
-    
+
     @RequestMapping(value = "/EditEmployee/{nik}", method = RequestMethod.GET)
     public ModelAndView doedit(@PathVariable("nik") String nik) {
         ModelAndView mv = new ModelAndView("view/EditEmployee");
         mv.addObject("employee", ei.getemployeeById(nik));
         return mv;
     }
-    
-     @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
     public ModelAndView saveEmployee(@RequestParam("nik") String nik,
             @RequestParam("name") String name,
             @RequestParam("email") String email,
@@ -252,7 +273,7 @@ public class EmployeeController {
         sendConfrimPass.setNik(nik);
         sendConfrimPass.setPassword(Password);
         sendConfrimPass.sent(true);
-                
+
 //        Job job= new Job(jobId, jobTitle);
 //        ji.saveOrUpdate(job);
         return mv;
@@ -314,25 +335,25 @@ public class EmployeeController {
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
         Date dates = format.parse(hasil);
         Boolean isAdmin = e.getIsAdmin();
-        Boolean isDelete = Boolean.valueOf("true"); 
+        Boolean isDelete = Boolean.valueOf("true");
         Boolean isActive = e.getIsActive();
-        String jobId = String.valueOf(e.getJobId().getJobId()) ;
+        String jobId = String.valueOf(e.getJobId().getJobId());
         String managerId = String.valueOf(e.getManagerId().getNik());
         Employee employee = new Employee(nik, name, email, Password, phoneNumber, dates, salary, isAdmin, isDelete, isActive, new Job(jobId), new Employee(managerId));
         ei.saveOrUpdate(employee);
-        
+
 //        Job job= new Job(jobId, jobTitle);
 //        ji.saveOrUpdate(job);
         return mv;
     }
-    
+
     @RequestMapping(value = "/ChangePassword/{password}", method = RequestMethod.GET)
     public ModelAndView ConfrimPassword(@PathVariable("password") String password) {
         ModelAndView mv = new ModelAndView("view/ChangePassword");
         mv.addObject("cp", ei.getEmployeeByPass(password));
         return mv;
     }
-    
+
     @RequestMapping(value = "/changePass", method = RequestMethod.POST)
     public ModelAndView ChangePassword(@RequestParam("nik") String nik,
             @RequestParam("name") String name,
@@ -348,7 +369,7 @@ public class EmployeeController {
     //            @RequestParam("isActive") String isActive
     ) throws ParseException {
         ModelAndView mv = new ModelAndView("redirect:/DashboardAdmin/");
-        
+
         String Password = BCrypt.hashpw(password, BCrypt.gensalt());
         Boolean isActive = Boolean.valueOf("true");
         Boolean isDeletee = Boolean.valueOf(isDelete);
